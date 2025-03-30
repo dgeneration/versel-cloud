@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Admin Panel - Locked Balances</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    {% include 'admin_navbar.html' %}
+    <div class="locked-balance-container container">
+        <h1>Admin Panel - Locked Balances</h1>
+
+        <h2>Add Balance to Locked</h2>
+        <form id="addBalanceForm" action="{{ url_for('admin_balance_locked_manage_add') }}" method="POST">
+            <div class="locked-balance-input-div">
+                <div>
+                    <label for="vc_id">VC ID:</label><br>
+                    <input type="text" id="vc_id" name="vc_id" required>
+                </div>
+                <div>
+                    <label for="amount">Amount:</label><br>
+                    <input type="number" id="amount" name="amount" required>
+                </div>
+            
+                <div>
+                    <label for="unlock_date">Unlock Date:</label><br>
+                    <input type="date" id="unlock_date" name="unlock_date" required><br><br>
+                </div>
+            </div>
+            <div class="locked-balance-input-div">
+                <div>
+                    <label for="note">Note:</label><br>
+                    <input type="text" id="note" name="note" required>
+                </div>
+                <button type="submit" class="green-button">Add Locked Balance</button>
+            </div>
+        </form>
+        {% if user.vc_balance_locked %}
+            <hr>
+            <div class="locked-balance-list-div">
+                <form id="searchForm" method="GET" action="{{ url_for('admin_balance_locked') }}">
+                    <input type="text" name="search" placeholder="Search by VC ID">
+                    <button type="submit">Search</button>
+                </form>
+                <h2>List of Users with Locked Balances</h2>
+                <form id="unlockAllForm" action="{{ url_for('admin_balance_locked_manage_all') }}" method="POST">
+                    <button type="submit" class="red-button">Unlock All Balances</button>
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <tr class="tr-head">
+                        <th>VC ID</th>
+                        <th class="th-amount">Amount</th>
+                        <th class="th-time">Unlock Date</th>
+                        <th class="th-action">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for balance in balances %}
+                    <tr>
+                        <td>{{ balance.vc_id }}</td>
+                        <td class="td-amount">{{ balance.amount }}</td>
+                        <td class="td-time">{{ balance.unlock_date }}</td>
+                        <td class="td-action">
+                            <form action="{{ url_for('admin_balance_locked_manage') }}" method="POST">
+                                <input type="hidden" name="vc_id" value="{{ balance.vc_id }}">
+                                <input type="hidden" name="amount" value="{{ balance.amount }}">
+                                <input type="hidden" name="unlock_date" value="{{ balance.unlock_date }}">
+                                <!-- Unlock Button -->
+                                <button type="submit" name="action" value="unlock" class="green-button button-small">Unlock</button>
+                                <!-- Delete Button -->
+                                <button type="submit" name="action" value="delete" class="red-button button-small">Delete</button>
+                            </form>
+                            <form action="{{ url_for('admin_balance_locked_manage') }}" class="date-form" method="POST">
+                                <input type="hidden" name="vc_id" value="{{ balance.vc_id }}">
+                                <input type="hidden" name="amount" value="{{ balance.amount }}">
+                                <input type="hidden" name="unlock_date" value="{{ balance.unlock_date }}">
+                                
+                                <!-- Change Date Form -->
+                                <button type="submit" name="action" value="change_date" class="dark-yellow-button button-small">Change Date</button>
+                                <input type="date" name="new_unlock_date" required>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>

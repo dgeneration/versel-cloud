@@ -1,0 +1,76 @@
+<!-- transaction_history_view.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'global_head.html' %}
+    <title>Transaction Detail</title>
+</head>
+
+<body>
+    <div class="main">
+        {% include 'global_body.html' %}
+        <section class="home-container">
+            <div class="home-div">
+                <div class="header-div">
+                    <h1>
+                        <span class="header-class">
+                            Transaction Detail
+                        </span>
+                    </h1>
+                </div>
+                <div class="recent-transaction-div">
+                    <div class="transaction-view-row view-div-1">
+                        <label class="color-text"><b>Txn id</b></label>
+                        <span>{{ transaction._id }}</span>
+                    </div>
+                    <div class="transaction-view-row view-div-2">
+                        <div>
+                            <label class="color-text"><b>Sender</b></label>
+                            <span>{{ transaction.sender_vc_id }}</span>
+                        </div>
+                        <div class="td-arrow">
+                            <img src="/static/img/arrow_thick_right.svg">
+                        </div>
+                        <div>
+                            <label class="color-text"><b>Recipient</b></label>
+                            <span>{{ transaction.recipient_vc_id }}</span>
+                        </div>
+                    </div>
+                    <div class="transaction-view-row view-div-3">
+                        <div>
+                            <label class="color-text"><b>Sender Username</b></label>
+                            <span>{{ transaction.sender_username }}</span>
+                        </div>
+                        <div>
+                            <label class="color-text"><b>Recipient Username</b></label>
+                            <span>{{ transaction.recipient_username }}</span>
+                        </div>
+                        <div>
+                            <label class="color-text"><b>Txn Type</b></label>
+                            <span>{{ transaction.txn_type }}</span>
+                        </div>
+                        <div>
+                            <label class="color-text"><b>Credit Type</b></label>
+                            <span>{{ transaction.credit_type }}</span>
+                        </div>
+                        <div>
+                            <label class="color-text"><b>Amount</b></label>
+                            <span>{{ transaction.vc_amount }}</span>
+                        </div>
+                        <div>
+                            <label class="color-text"><b>Timestamp</b></label>
+                            <span>{{ transaction.timestamp }}</span>
+                        </div>
+                    </div>
+                    <div class="transaction-view-row view-div-1">
+                        <label class="color-text"><b>Note</b></label>
+                        <span>{{ transaction.note }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

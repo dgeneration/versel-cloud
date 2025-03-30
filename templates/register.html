@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'global_head.html' %}
+    <title>Register</title>
+</head>
+
+<body>
+    <div class="main">
+        {% include 'global_body.html' %}
+        <section class="home-container">
+            <div class="home-div">
+                <div class="header-div">
+                    <h1>
+                        <span class="header-class">
+                            Register
+                        </span>
+                    </h1>
+                </div>
+                <div class="login-form-div">
+                    <form action="#" method="post" action="{{ url_for('register') }}" class="login-form register-form">
+
+                        <div class="register-form-name">
+                            <div class="form-input-div">
+                                <label>First Name </label><br>
+                                <input type="text" name="first_name" placeholder="Versel" required>
+                            </div>
+
+                            <div class="form-input-div">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" placeholder="Cloud" required>
+                            </div>
+                        </div>
+
+                        <div class="form-input-div">
+                            <label>Email</label><br>
+                            <input type="email" name="email" placeholder="hello@versel.cloud" required>
+                        </div>
+
+                        <div class="form-input-div">
+                            <label>Username</label><br>
+                            <input type="text" name="username" placeholder="Versel00" required>
+                        </div>
+
+                        <div class="register-number">
+                            <div class="form-input-div">
+                                <label>Country</label>
+                                <div class="custom-dropdown">
+                                    <input type="text" id="country-input" name="country" placeholder="Select Country"
+                                        required>
+                                    <ul id="country-list" class="country-list">
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="form-input-div">
+                                <label>Phone Number</label><br>
+                                <input type="text" pattern="[0-9]*" maxlength="10" name="phone"
+                                    placeholder="01234567890" required>
+                            </div>
+                        </div>
+
+                        <div class="form-input-div">
+                            <label>Password</label>
+                            <div class="password-container">
+                                <input type="password" name="password" id="password" placeholder="Your Secure Password"
+                                    minlength="8" required>
+                                <img class="password-toggle" src="/static/img/open_eye.svg"
+                                    onclick="togglePasswordVisibility()" alt="Toggle Password Visibility">
+                            </div>
+                        </div>
+
+                        <div class="form-input-div">
+                            <label>Confirm Password</label><br>
+                            <input type="password" name="confirm_password" id="confirm_password"
+                                placeholder="Confirm Secure Password" minlength="8" required>
+                        </div>
+
+                        <div class="form-input-div cloudflare-turnstile">
+                            {{ turnstile }}
+                        </div>
+
+                        <div>
+                            <input type="submit" value="Register" class="sub-header-button">
+                        </div>
+                    </form>
+                </div>
+                <div class="header-div">
+                    <a href="{{ url_for('login') }}" class="register-link">Already registered? Login here</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        // Fetch the list of countries from the API
+        fetch('https://trial.mobiscroll.com/content/countries.json')
+            .then(response => response.json())
+            .then(data => {
+
+                data.forEach(country => {
+                    if (country.value === "NP") {
+                        country.value = "IN";
+                    }
+                });
+
+                const countryInput = document.getElementById('country-input');
+                const countryList = document.getElementById('country-list');
+
+                // Function to create a list item for a country
+                function createListItem(country) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = country.text;
+
+                    // Create an <img> element for the flag
+                    const flagImg = document.createElement('img');
+                    flagImg.src = `https://img.mobiscroll.com/demos/flags/${country.value}.png`;
+                    flagImg.alt = `${country.text} Flag`;
+                    flagImg.classList.add('flag-icon'); // Add a class for styling
+                    listItem.insertBefore(flagImg, listItem.firstChild);
+
+                    listItem.addEventListener('click', function () {
+                        countryInput.value = country.text;
+                        countryList.style.display = 'none';
+                    });
+
+                    return listItem;
+                }
+
+                // Function to update the country list
+                function updateCountryList(filter) {
+                    countryList.innerHTML = ''; // Clear the list
+                    let displayedCount = 0;
+
+                    // Loop through the data and add options to the custom dropdown list
+                    data.forEach(country => {
+                        if (!filter || country.text.toLowerCase().includes(filter.toLowerCase())) {
+                            const listItem = createListItem(country);
+                            countryList.appendChild(listItem);
+                            displayedCount++;
+                        }
+                    });
+
+                    // Show scroll bar if more than 6 countries are displayed
+                    if (displayedCount > 6) {
+                        countryList.style.overflowY = 'scroll';
+                        countryList.style.maxHeight = '150px'; // Adjust the height as needed
+                    } else {
+                        countryList.style.overflowY = 'auto';
+                        countryList.style.maxHeight = 'initial';
+                    }
+                }
+
+                // Show/hide the custom dropdown list on input focus/blur
+                countryInput.addEventListener('input', function () {
+                    const inputValue = this.value;
+                    const matchingCountry = data.find(country => country.text.toLowerCase() === inputValue.toLowerCase());
+                    if (!matchingCountry) {
+                        this.value = ''; // Clear the input if the entered value doesn't match any country
+                    }
+                    updateCountryList(this.value);
+                    countryList.style.display = 'block';
+                });
+
+                countryInput.addEventListener('focus', function () {
+                    updateCountryList(this.value);
+                    countryList.style.display = 'block';
+                });
+
+                countryInput.addEventListener('blur', function () {
+                    setTimeout(() => {
+                        countryList.style.display = 'none';
+                    }, 200); // Delay hiding the list to allow clicking on list items
+                });
+
+                // Initial population of the country list
+                updateCountryList('');
+            })
+            .catch(error => console.error('Error fetching countries:', error));
+
+    </script>
+</body>
+
+</html>

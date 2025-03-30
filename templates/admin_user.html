@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Admin Panel - User List</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    {% include 'admin_navbar.html' %}
+    <div class="admin-user-container container">
+        <h1>Admin Panel - User List</h1>
+        <h2>Manage Users</h2>
+        <form action="{{ url_for('admin_user') }}" method="GET">
+            <label for="search">Search</label><br>
+            <input type="text" id="search" name="search" class="search-box">
+            <button type="submit" class="sky-blue-button">Search</button>
+        </form>
+        <table>
+            <thead>
+                <tr class="tr-head">
+                    <th class="th-user">Username</th>
+                    <th>Email</th>
+                    <th class="th-phone">Phone</th>
+                    <th>VC ID</th>
+                    <th class="th-amount">VC Balance</th>
+                    <th class="td-button">Admin</th>
+                    <th class="td-button">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="td-user">{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td class="td-phone">{{ user.phone }}</td>
+                    <td>{{ user.vc_id }}</td>
+                    <td class="td-amount">{{ user.vc_balance_total }}</td>
+                    <td class="td-button">
+                        {% if user.username != current_user.username %}
+                            {% if user.admin %}
+                                <form action="/remove_admin/{{ user.username }}" method="post">
+                                    <button type="submit" value="Remove Admin" class="red-button button-small">Remove Admin</button>
+                                </form>
+                            {% else %}
+                                <form action="/make_admin/{{ user.username }}" method="post">
+                                    <button type="submit" value="Make Admin" class="green-button button-small">Make Admin</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td class="td-button">
+                        {% if user.username != current_user.username %}
+                            <form action="/delete_other_user/{{ user.username }}" method="post" onsubmit="return confirmDelete('{{ user.username }}');">
+                                <button type="submit" value="Delete" class="red-button button-small">Delete</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'global_head.html' %}
+    <title>Profile</title>
+</head>
+
+<body>
+    <div class="main">
+        {% include 'global_body.html' %}
+        <section class="home-container">
+            <div class="home-div">
+                <div class="header-div">
+                    <h1>
+                        <span class="header-class">
+                            Welcome to Your Profile
+                        </span>
+                    </h1>
+                </div>
+                <div class="profile-div">
+                    <div class="user-details">
+                        <a class="color-text"><b>Versel Credit Id </b>:</a>
+                        <span>{{ user.vc_id }}</span><br><br>
+                        <a class="color-text"><b>First Name </b>:</a>
+                        <span>{{ user.first_name }}</span><br>
+                        <a class="color-text"><b>Last Name </b>:</a>
+                        <span>{{ user.last_name }}</span><br><br>
+                        <a class="color-text"><b>Versel Email </b>:</a>
+                        <span>{{ user.vc_email }}</span><br>
+                        <a class="color-text"><b>Email </b>:</a>
+                        <span>{{ user.email }}</span><br><br>
+                        <a class="color-text"><b>Phone Number </b>:</a>
+                        <span>{{ user.phone }}</span><br>
+                        <a class="color-text"><b>Country </b>:</a>
+                        <span>{{ user.country }}</span><br>
+                    </div>
+                    <div class="profile-button-div">
+                        <button class="sub-header-button"
+                            onclick="window.location.href='{{ url_for('logout') }}'">Logout</button>
+                        <form method="post" action="{{ url_for('delete_user', username=user.username) }}"
+                            onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                            <button class="sub-header-button" type="submit">Delete Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

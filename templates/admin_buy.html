@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Admin Panel - Buy Transaction List</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    {% include 'admin_navbar.html' %}
+    <div class="transactions-container container">
+        <h1>Admin Panel - Buy Transaction List</h1>
+        <h2>Manage Buy Transaction</h2>
+        <form action="{{ url_for('admin_buy') }}" method="GET">
+            <label for="search">Search</label><br>
+            <input type="text" id="search" name="search" class="search-box">
+            <button type="submit" class="sky-blue-button">Search</button>
+        </form>
+        <table>
+            <thead>
+                <tr class="tr-head">
+                    <th>VC ID</th>
+                    <th class="th-txnid">Txn ID</th>
+                    <th class="th-amount">VC Amount</th>
+                    <th class="th-amount" style="width: 110px;">Pay Amount</th>
+                    <th class="th-time">Timestamp</th>
+                    <th class="th-amount">Status</th>
+                    <th class="td-button" style="width: 150px;">Approve</th>
+                    <th class="td-button" style="width: 150px;">Reject</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.vc_id }}</td>
+                        <td class="td-txnid">{{ transaction.note }}</td>
+                        <td class="td-amount">{{ transaction.vc_amount }}</td>
+                        <td class="td-amount" style="width: 110px;">{{ transaction.pay_amount }}</td>
+                        <td class="td-time">{{ transaction.timestamp }}</td>
+                        <td class="td-amount">{{ transaction.status }}</td>
+                        <td class="td-button" style="width: 150px;">
+                            {% if transaction.status == 'approve' %}
+                            <form action="/buy/unapprove/{{ transaction.note }}" method="post">
+                                <button type="submit" value="Approve" class="red-button button-small">UnApprove</button>
+                            </form>
+                            {% else %}
+                            <form action="/buy/approve/{{ transaction.note }}" method="post">
+                                <button type="submit" value="Approve" class="green-button button-small">Approve</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                        <td class="td-button" style="width: 150px;">
+                            {% if transaction.status == 'approve' %}
+                            {% elif transaction.status == 'reject' %}
+                            <form action="/buy/delete/{{ transaction.note }}" method="post">
+                                <button type="submit" value="Reject" class="red-button button-small">Delete</button>
+                            </form>
+                            {% else %}
+                            <form action="/buy/reject/{{ transaction.note }}" method="post">
+                                <button type="submit" value="Reject" class="red-button button-small">Reject</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

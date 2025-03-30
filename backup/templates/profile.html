@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Profile</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    <div class="profile-container container">
+        <h1>Welcome to Your Profile</h1>
+        <div class="user-details">
+            <a>Versel Credit Id :</a>
+            <span>{{ user.vc_id }}</span><br><br>
+            <a>First Name :</a>
+            <span>{{ user.first_name }}</span><br>
+            <a>Last Name :</a>
+            <span>{{ user.last_name }}</span><br><br>
+            <a>Versel Email :</a>
+            <span>{{ user.vc_email }}</span><br>
+            <a>Email :</a>
+            <span>{{ user.email }}</span><br><br>
+            <a>Phone Number :</a>
+            <span>{{ user.phone }}</span><br>
+            <a>Country :</a>
+            <span>{{ user.country }}</span><br>
+        </div>
+        <button class="red-button button-full" onclick="window.location.href='{{ url_for('logout') }}'">Logout</button>
+        <form method="post" action="{{ url_for('delete_user', username=user.username) }}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+            <button class="red-button button-full" type="submit">Delete Account</button>
+        </form>
+    </div>
+</body>
+</html>

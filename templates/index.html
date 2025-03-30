@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'global_head.html' %}
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="main">
+        {% include 'global_body.html' %}
+        <section class="home-container">
+            <div class="home-div">
+                <div class="header-div">
+                    <h1>
+                        <span class="header-class">
+                            Welcome to Versel Pay
+                        </span>
+                    </h1>
+                </div>
+                <div class="sub-header-div">
+                    <p>Versel Pay is a cutting-edge Web3 payment system designed to provide secure and decentralized
+                        transactions for users.
+                    </p>
+                </div>
+                <div class="header-div">
+                    <a class="sub-header-button" onclick="window.location.href='{{ url_for('register') }}'">Get
+                        Started</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

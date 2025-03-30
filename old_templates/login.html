@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Login</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    <div class="login-container container">
+        <h2>Login</h2>
+        <form action="#" method="post" action="{{ url_for('login') }}">
+
+            <li>
+                <label>Username or Email </label><br>
+                <input type="text" name="identifier" placeholder="hello@versel.cloud" required>
+            </li>
+            
+            <li>
+                <label>Password</label>
+                <div class="password-container">
+                    <input type="password" name="password" id="password" placeholder="Your Secure Password" required>
+                    <img class="password-toggle" src="/static/img/open_eye.svg" onclick="togglePasswordVisibility()" alt="Toggle Password Visibility">
+                </div>
+            </li>
+
+            <li class="register-captcha">
+                {{ turnstile }}
+            </li>
+
+            <li>
+                <input type="submit" value="Login">
+            </li>
+        </form>
+        <a href="{{ url_for('register') }}" class="register-link">Not registered? Register here</a>
+    </div>
+</body>
+</html>

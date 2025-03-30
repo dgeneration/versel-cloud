@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Home</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    <div class="home-container container">
+        <h1>Welcome to Versel Pay</h1>
+        <p>By Versel Cloud</p>
+        <div class="button-container">
+            <button class="dark-yellow-button" onclick="window.location.href='{{ url_for('login') }}'">Login</button>
+            <button class="green-button" onclick="window.location.href='{{ url_for('register') }}'">Register</button>
+            <button class="dark-blue-button" onclick="window.location.href='{{ url_for('profile') }}'">Profile</button>
+        </div>
+    </div>
+</body>
+</html>

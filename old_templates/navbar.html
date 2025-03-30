@@ -1,0 +1,19 @@
+<!-- navbar.html -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<nav class="navbar-container">
+    <ul>
+        <button class="sky-blue-button" onclick="window.location.href='{{ url_for('index') }}'">Home</button>
+        {% if is_logged_in %}
+            <button class="green-button" onclick="window.location.href='{{ url_for('wallet') }}'">Wallet</button>
+            <button class="dark-blue-button" onclick="window.location.href='{{ url_for('profile') }}'">Profile</button>
+        {% else %}
+            <button class="green-button" onclick="window.location.href='{{ url_for('register') }}'">Register</button>
+            <button class="dark-blue-button" onclick="window.location.href='{{ url_for('login') }}'">Login</button>
+        {% endif %}
+        <button class="dark-yellow-button" onclick="window.location.href='{{ url_for('recent_transactions') }}'">Recent Transactions</button>
+        {% if is_admin %}
+            <button class="red-button" onclick="window.location.href='{{ url_for('admin_dashboard') }}'">Admin Panel</button>
+        {% endif %}
+    </ul>
+</nav>
+

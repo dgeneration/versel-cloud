@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'global_head.html' %}
+    <title>Versel Buy</title>
+</head>
+
+<body>
+    <div class="main">
+        {% include 'global_body.html' %}
+        <section class="home-container">
+            <div class="home-div">
+                <div class="header-div">
+                    <h1>
+                        <span class="header-class">
+                            Versel Buy
+                        </span>
+                    </h1>
+                </div>
+                <div class="wallet-buy-div">
+                    <h3>Conversion Rate:<span class="color-text"> 1 VC = {{ conversion_rate }} ₹</span></h3>
+                    <form method="post" action="/wallet/buy">
+                        <div class="form-input-div">
+                            <label for="vc_amount">Enter the Amount of Versel Credits to buy</label><br>
+                            <input type="number" id="vc_amount" name="vc_amount" placeholder="Amount" min="200"
+                                required>
+                        </div>
+                        <!-- Payment amount display based on conversion rate -->
+                        <div class="form-input-div">
+                            <label>Payment amount</label><br>
+                            <input style="width: auto;color: #6dcaff;font-size: large;" id="pay_amount"
+                                name="pay_amount" readonly />
+                        </div>
+                        <!-- Placeholder for QR code -->
+                        <h2 class="color-header"> UPI Payment </h2>
+                        <p>Make sure to enter your username or email as note.</p> <br>
+                        <div style="display: flex; justify-content: center;">
+                            <img src="/static/img/upi.jpg" height="300px">
+                        </div>
+                        <p>Scan QR code or make payment to: <span class="color-text">9512191655@jupiteraxis</span></p>
+                        <div id="qr_code_placeholder"></div>
+                        <div class="form-input-div">
+                            <label for="txn_id">Enter UTR ID</label><br>
+                            <input type="text" required pattern="[0-9]{12}" maxlength=12 id="txn_id" name="txn_id"
+                                ng-model="formdata.userCode" title="12 Digit UTR id" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="sub-header-button">Buy</button>
+                            <button type="button" onclick="window.location.href='/';"
+                                class="sub-header-button">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        // Calculate payment amount based on conversion rate and update the payment amount display
+        var conversionRate = {{ conversion_rate }};
+        document.getElementById('vc_amount').addEventListener('input', function () {
+            var vcAmount = parseFloat(this.value);
+            var paymentAmount = vcAmount * conversionRate;
+            document.getElementById('pay_amount').value = paymentAmount + ' ₹';
+        });
+    </script>
+</body>
+
+</html>

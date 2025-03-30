@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'global_head.html' %}
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="main">
+        {% include 'global_body.html' %}
+        <section class="home-container">
+            <div class="home-div">
+                <div class="header-div">
+                    <h1>
+                        <span class="header-class">
+                            Login
+                        </span>
+                    </h1>
+                </div>
+                <div class="login-form-div">
+                    <form action="#" method="post" action="{{ url_for('login') }}" class="login-form">
+
+                        <div class="form-input-div">
+                            <label>Username or Email </label><br>
+                            <input type="text" name="identifier" placeholder="hello@versel.cloud" required>
+                        </div>
+
+                        <div class="form-input-div">
+                            <label>Password</label>
+                            <div class="password-container">
+                                <input type="password" name="password" id="password" placeholder="Your Secure Password"
+                                    required>
+                                <img class="password-toggle" src="/static/img/open_eye.svg"
+                                    onclick="togglePasswordVisibility()" alt="Toggle Password Visibility">
+                            </div>
+                        </div>
+
+                        <div class="form-input-div cloudflare-turnstile">
+                            {{ turnstile }}
+                        </div>
+
+                        <div>
+                            <input class="sub-header-button" type="submit" value="Login">
+                        </div>
+                    </form>
+                </div>
+                <div class="header-div">
+                    <a href="{{ url_for('register') }}" class="register-link">Not registered? Register here</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

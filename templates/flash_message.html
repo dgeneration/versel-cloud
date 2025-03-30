@@ -1,0 +1,43 @@
+<!-- flash_message.html -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="flash-message-container-{{ category }} flash-message-container">
+    <div class="flash-message-div">
+        <h3>
+            {% if category == 'success' %}
+            Success
+            {% elif category == 'danger' %}
+            Error
+            {% elif category == 'info' %}
+            Info
+            {% elif category == 'warning' %}
+            Warning
+            {% endif %}
+        </h3>
+        <a>{{ message }}</a>
+    </div>
+    <div class="progress-bar {{ category }}"></div>
+</div>
+
+<script>
+    var progressBar = document.querySelector(".flash-message-container-{{ category }} .progress-bar");
+    var duration = 5000; // Duration in milliseconds (adjust as needed)
+    var interval = 50; // Update interval in milliseconds (adjust as needed)
+    var increment = interval / duration * 100;
+    var progress = 0;
+
+    var timer = setInterval(function () {
+        progress += increment;
+        progressBar.style.width = progress + "%";
+        if (progress >= 100) {
+            clearInterval(timer);
+            document.querySelector(".flash-message-container-{{ category }}").style.display = 'none';
+        }
+    }, interval);
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %}

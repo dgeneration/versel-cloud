@@ -1,0 +1,17 @@
+{% if is_admin %}
+<!-- admin_navbar.html -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<nav class="navbar-container" style="top: 6%;">
+    <ul>
+        <button class="sky-blue-button" onclick="window.location.href='{{ url_for('admin_dashboard') }}'">Dashboard</button>
+        <button class="green-button" onclick="window.location.href='{{ url_for('admin_user') }}'">Users</button>
+        <button class="dark-blue-button" onclick="window.location.href='{{ url_for('admin_balance_locked') }}'">Balance</button>
+        <button class="dark-yellow-button" onclick="window.location.href='{{ url_for('admin_buy') }}'">Buy</button>
+        <!-- 
+        <button class="green-button" onclick="window.location.href='{{ url_for('register') }}'">Buy</button>
+        <button class="dark-yellow-button" onclick="window.location.href='{{ url_for('recent_transactions') }}'">Recent Transactions</button>
+        <button class="red-button" onclick="window.location.href='{{ url_for('admin_user') }}'">Admin Panel</button>
+        -->
+    </ul>
+</nav>
+{% endif %}

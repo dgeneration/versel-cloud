@@ -1,0 +1,14 @@
+SECRET_KEY = 'your_secret_key'
+
+MAIL_SERVER = 'smtp.office365.com'
+MAIL_PORT = 587
+MAIL_USE_TLS = True
+MAIL_USERNAME = 'support@dgeneration.io'
+MAIL_PASSWORD = 'kYfsod-8pebfu-nocpop'
+MAIL_DEFAULT_SENDER = 'support@dgeneration.io'
+
+TURNSTILE_ENABLED = True
+TURNSTILE_SITE_KEY = '0x4AAAAAAA9HiJsTgIpeEUEG'
+TURNSTILE_SECRET_KEY = '0x4AAAAAAA9HiKV3JhF7FB0mhzMNjbC4Fzc'
+
+MONGO_DB_URI = 'mongodb+srv://app:JAY252006@versel-cloud.a5krarz.mongodb.net/?retryWrites=true&w=majority&appName=versel-cloud'

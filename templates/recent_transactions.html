@@ -1,0 +1,58 @@
+<!-- recent_transactions.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'global_head.html' %}
+    <title>Recent Transactions</title>
+</head>
+
+<body>
+    <div class="main">
+        {% include 'global_body.html' %}
+        <section class="home-container">
+            <div class="home-div">
+                <div class="header-div">
+                    <h1>
+                        <span class="header-class">
+                            Recent Transactions
+                        </span>
+                    </h1>
+                </div>
+                <div class="recent-transaction-div">
+                    <form action="{{ url_for('recent_transactions') }}" method="GET" class="search-form">
+                        <label for="search">Search</label><br>
+                        <input type="text" id="search" name="search" class="search-input">
+                        <button type="submit" class="sub-header-button">Search</button>
+                    </form>
+                    <table>
+                        <thead>
+                            <tr class="tr-head">
+                                <th class="th-txnid">Transaction ID</th>
+                                <th>Sender</th>
+                                <th class="th-arrow"> </th>
+                                <th>Recipient</th>
+                                <th class="th-amount">Amount</th>
+                                <th class="th-time">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                            <tr>
+                                <td class="td-txnid">{{ transaction._id }}</td>
+                                <td>{{ transaction.sender_vc_id }}</td>
+                                <td class="td-arrow"><img src="/static/img/arrow_thick_right.svg"></td>
+                                <td>{{ transaction.recipient_vc_id }}</td>
+                                <td class="td-amount">{{ transaction.vc_amount }}</td>
+                                <td class="td-time">{{ transaction.timestamp }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

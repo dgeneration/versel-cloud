@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    {% include 'admin_navbar.html' %}
+    <div class="admin-dashboard-container container">
+        <h1>Admin Dashboard</h1>
+        <div class="stats">
+            <h2>Statistics</h2>
+            <p>Total Users: {{ total_users }}</p>
+            <p>Total Admin Users: {{ total_admin_users }}</p>
+        </div>
+    </div>
+</body>
+</html>

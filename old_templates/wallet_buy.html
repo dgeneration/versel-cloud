@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Versel Buy</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    <div class="wallet-container container">
+        <h1>Versel Buy</h1>
+        <h3>Conversion Rate: 1 VC = {{ conversion_rate }} ₹</h3>
+        <form method="post" action="/wallet/buy">
+            <label for="vc_amount">Enter the Amount of Versel Credits to buy:</label><br>
+            <input type="number" id="vc_amount" name="vc_amount" placeholder="Amount" min="200" required><br>
+            <!-- Payment amount display based on conversion rate -->
+            <p>Payment amount: <input style="border: 0;width: auto;color: #6dcaff;font-size: large;" id="pay_amount" name="pay_amount" readonly /></p>
+            <!-- Placeholder for QR code -->
+            <h2> UPI Payment </h2>
+            <p>Make sure to enter your username or email as note.</p> <br>
+            <div style="display: flex; justify-content: center;">
+                <img src="/static/img/upi.jpg" height="300px">
+            </div>
+            <p>Scan QR code or make payment to: <span>9512191655@jupiteraxis</span></p>
+            <div id="qr_code_placeholder"></div>
+            <label for="txn_id">Enter UTR / Transaction ID for confirmation:</label><br>
+            <input type="text" required pattern="[0-9]{12}" maxlength=12 id="txn_id" name="txn_id" ng-model="formdata.userCode" title="12 Digit UTR id" required><br>
+            <button type="submit">Buy</button>
+            <button type="button" onclick="window.location.href='/';">Cancel</button>
+        </form>
+    </div>
+    <script>
+        // Calculate payment amount based on conversion rate and update the payment amount display
+        var conversionRate = {{ conversion_rate }};
+        document.getElementById('vc_amount').addEventListener('input', function() {
+            var vcAmount = parseFloat(this.value);
+            var paymentAmount = vcAmount * conversionRate;
+            document.getElementById('pay_amount').value = paymentAmount + ' ₹';
+        });
+    </script>
+</body>
+</html>

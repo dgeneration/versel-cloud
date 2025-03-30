@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Versel Wallet</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    <div class="wallet-container container">
+        <h1>Versel Wallet</h1>
+        <div class="wallet-details">
+            <a>Versel Credit Id :</a>
+            <span>{{ user.vc_id }}</span><br>
+            <a>Locked Balance :</a>
+            {% if user.vc_balance_locked %}
+            <br>
+            <table>
+                <thead>
+                <tr class="tr-head">
+                    <th class="th-amount">Amount</th>
+                    <th class="th-time">Unlock Date</th>
+                </tr>
+                </thead>
+                {% for balance in user.vc_balance_locked %}
+                <tbody>
+                    <tr>
+                        <td class="td-amount">{{ balance.split()[0] }}</td>
+                        <td class="td-time">{{ balance.split()[1] }}</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            {% else %}
+            <span>0</span><br>
+            {% endif %}
+            <a>Unlocked Balance :</a>
+            <span>{{ user.vc_balance_unlocked }}</span><br>
+            <a>Total Balance :</a>
+            <span>{{ user.vc_balance_total }}</span>
+        </div>
+        <h3>Transfer Versel Credit</h2>
+        <form method="post" action="/wallet" onsubmit="return confirm('Are you sure you want to transfer Versel Credit to another account? This action cannot be undone.');">
+            <label for="recipient">Recipient</label> <a id="recipientUsername"></a><br>
+            <input type="text" id="recipientInput" name="recipient" placeholder="Recipient Username or Wallet Address" required><br>
+            <label for="amount">Amount</label><br>
+            <input type="number" id="amount" name="amount" placeholder="Amount" min="1" required><br>
+            <label for="note">Note</label><br>
+            <input type="text" id="note" name="note" placeholder="Write a note">
+            <button class="green-button button-full" type="submit">Transfer</button>
+        </form>
+        <button class="dark-blue-button button-full" onclick="window.location.href='{{ url_for('wallet_buy') }}'">Buy Versel Credit</button>
+        <button class="dark-yellow-button button-full" onclick="window.location.href='{{ url_for('transaction_history') }}'">Transaction History</button>
+    </div>
+    <script>
+        document.getElementById('recipientInput').addEventListener('input', function() {
+            var identifier = this.value;
+            if (identifier) {
+                // Make an AJAX request to check if the identifier exists
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/check_identifier?identifier=' + identifier, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        document.getElementById('recipientUsername').innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send();
+            } else {
+                document.getElementById('recipientUsername').innerHTML = '';
+            }
+        });
+    </script>
+</body>
+</html>

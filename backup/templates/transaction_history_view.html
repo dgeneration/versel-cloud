@@ -1,0 +1,61 @@
+<!-- transaction_history_view.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'global_head.html' %}
+    <title>Transaction Detail</title>
+</head>
+<body>
+    {% include 'global_body.html' %}
+    <div class="transactions-container container">
+        <h1>Transaction Detail</h1>
+        <div class="transaction-view-row view-div-1">
+            <label>Txn id</label>
+            <span>{{ transaction._id }}</span>
+        </div>
+        <div class="transaction-view-row view-div-2">
+            <div>
+                <label>Sender</label>
+                <span>{{ transaction.sender_vc_id }}</span>
+            </div>
+            <div class="td-arrow">
+                <img src="/static/img/arrow_thick_right.svg">
+            </div>
+            <div>
+                <label>Recipient</label>
+                <span>{{ transaction.recipient_vc_id }}</span>
+            </div>
+        </div>
+        <div class="transaction-view-row view-div-3">
+            <div>
+                <label>Sender Username</label>
+                <span>{{ transaction.sender_username }}</span>
+            </div>
+            <div>
+                <label>Recipient Username</label>
+                <span>{{ transaction.recipient_username }}</span>
+            </div>
+            <div>
+                <label>Txn Type</label>
+                <span>{{ transaction.txn_type }}</span>
+            </div>
+            <div>
+                <label>Credit Type</label>
+                <span>{{ transaction.credit_type }}</span>
+            </div>
+            <div>
+                <label>Amount</label>
+                <span>{{ transaction.vc_amount }}</span>
+            </div>
+            <div>
+                <label>Timestamp</label>
+                <span>{{ transaction.timestamp }}</span>
+            </div>
+        </div>
+        <div class="transaction-view-row view-div-1">
+            <label>Note</label>
+            <span>{{ transaction.note }}</span>
+        </div>
+    </div>
+</body>
+</html>
